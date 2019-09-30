@@ -5,45 +5,52 @@ function vindurl()
 }
 </script>
 
+<div>
+<p>
 
 <table id="vivatable" class="wp-block-table">
 
-<tr>
+<th>
+</th>
 
-<td>Brofjorden (#88) <br>
+<tr class="tr-viva">
+
+<td class="td-viva"> 
+Brofjorden (#88) <br>
 <iframe class="frmviva" src="http://vivadisplay.sjofartsverket.se/#station=88&amp;name=T%C3%A5n&amp;standalone=true&amp;chart=medelvind" scrolling="no">
 </iframe>
 </td>
 
-<td>
-Vinga (#114) <br>
+<td class="td-viva">
+ Vinga (#114) <br>
 <iframe class="frmviva" src="http://vivadisplay.sjofartsverket.se/#station=114&amp;name=Vinga&amp;standalone=true&amp;chart=medelvind" scrolling="no">
 </iframe>
 </td>
 </tr>
 
-<tr>
-<td>
+<tr class="tr-viva">
+<td class="td-viva">
 Ringhals (#76) <br> 
 <iframe class="frmviva" src="http://vivadisplay.sjofartsverket.se/#station=76&name=Ringhals&standalone=true&chart=medelvind" scrolling="no" >
 </iframe>
 </td>
 
 
-<td>Varberg/Subbeberget (#164) <br>
+<td class="td-viva">
+Varberg/Subbeberget (#164) <br>
 <iframe class="frmviva" src="http://vivadisplay.sjofartsverket.se/#station=164&amp;name=Subbeberget&amp;standalone=true&amp;chart=medelvind" scrolling="no">
 </iframe>
 </td>
 </tr>
 
-<tr>
-<td>
+<tr class="tr-viva">
+<td class="td-viva">
 Halmstad (#43) <br>
 <iframe class="frmviva" src="http://vivadisplay.sjofartsverket.se/#station=43&amp;name=Halmstad&amp;standalone=true&amp;chart=medelvind" scrolling="no" >
 </iframe>
 </td>
 
-<td>
+<td class="td-viva">
 Barsebäck (#25) <br>
 
 <iframe class="frmviva" src="http://vivadisplay.sjofartsverket.se/#station=25&name=Barseb%C3%A4ck&standalone=true&chart=medelvind
@@ -55,27 +62,62 @@ Barsebäck (#25) <br>
 </td>
 </tr>
 </table>
-
+</p>
+</div>
 
 <style>
+
+
+<!--
+
+
+-->
+
+
+
 <!-- Style the element with the id "vivatable" -->
 
-#vivatable {
-  background-color: lightgrey;
-   border: 5px solid black;
-
-  
+table#vivatable tr:nth-child(even) {
+  background-color: white;
 }
+table#vivatable tr:nth-child(odd) {
+  background-color: white;
+}
+
+table#vivatable {
+
+
+}
+.td-viva {
+  width:800px;
+  border: 1px solid gray;
+  text-align: center;
+  padding-left:25px;
+  
+
+
+}
+
+.tr-viva {
+ height: 400px;
+}
+
+
+
 
 <!-- Style all elements with the class name "wp-block-table" -->
 .wp-block-table {
-  color: black;
-  
+
+
 }
 
 .frmviva{
-   height:340px;
-   width:340px;
+   height:320px;
+   width:320px;
+   margin-left:-80px;
+   margin-top: 0px;
+   padding-top: 0px;
+   border: None
 
 }
 
