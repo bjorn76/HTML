@@ -11,6 +11,48 @@
 
 <table>
 
+<!--
+inner and outer div is used to crop the viva display (in iframe-viva)to 290px with no white space around
+
+-->
+<style>
+
+.inner{
+  width: 360px;
+  height: 360px;
+  overflow: hidden;
+  border: 0px solid black;
+  margin-top: -70px;
+  margin-left: -58px;
+  padding-bottom: 10px;
+  }
+
+.outer{
+  width: 290px;
+  height: 290px;
+  overflow: hidden;
+  border: 2px solid red;
+  padding-bottom: 0px;
+  
+}
+
+.iframe-viva{
+  width: 540px;
+  height:540px;
+  border: None;
+}
+
+.td-viva {
+
+  border: 2px solid green;
+  text-align: center;
+  padding: 2px;
+
+}
+</style>
+
+
+
 <tr class="tr-viva">
 <td class="td-viva">
 
@@ -131,45 +173,7 @@ Barsebäck (#25) <br>
 </td>
 </tr>
 
-<table>
+</table>
 
 
-<!--
-inner and outer div is used to crop the viva display (in iframe-viva)to 290px with no white space around
 
--->
-<style>
-
-.inner{
-  width: 360px;
-  height: 360px;
-  overflow: hidden;
-  border: 0px solid black;
-  margin-top: -70px;
-  margin-left: -58px;
-  padding-bottom: 10px;
-  }
-
-.outer{
-  width: 290px;
-  height: 290px;
-  overflow: hidden;
-  border: 0px solid red;
-  padding-bottom: 0px;
-  
-}
-
-.iframe-viva{
-  width: 540px;
-  height:540px;
-  border: None;
-}
-
-.td-viva {
-
-  border: 0px solid green;
-  text-align: center;
-  padding: 0px;
-
-}
-</style>
