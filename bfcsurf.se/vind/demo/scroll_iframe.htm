@@ -1,0 +1,50 @@
+<a href="#" id="scroll">Scroll to (400,400)!</a><br />
+
+<div id="frmonsala" style="width: 300px; height: 200px; overflow: auto;">
+   <iframe width="800" height="600" src="http://www.oso.chalmers.se/weather/index.html#windspeed" scrolling="no">
+   </iframe>
+</div>
+
+<script type="text/javascript">
+$("#scroll").click(function()
+{
+  $("#frmonsala").scrollTop(400).scrollLeft(400);
+  return false;
+});
+</script>
+
+<<!--
+
+<p id="demo"></p>
+
+<h4> Onsala</h4>
+ <button onclick="displayDate()">The time is?</button> 
+
+
+<p>
+<iframe id="frmonsala" src="http://www.oso.chalmers.se/weather/index.html#windspeed" 
+ scrolling="no" 
+
+>
+
+
+
+
+</iframe>
+</p>
+
+<style>
+ #frmonsal{
+   height:340px;
+   width:680px;
+   margin-top: 438px;
+
+}
+</style>
+
+
+
+scrolling="no" 
+
+
+-->
