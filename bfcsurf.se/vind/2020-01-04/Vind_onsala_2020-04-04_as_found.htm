@@ -1,0 +1,59 @@
+<script type="text/javascript">
+
+
+function visardiagram(){
+  //document.getElementById("debug").innerHTML = "Debug Visardiagram"
+  document.getElementById("div1").style.height= "660px"
+  document.getElementById("div1").style.width= "660px"
+  document.getElementById("frameonsala").style.marginTop= "-1580px";
+
+  
+}
+
+function diagram(){
+  //document.getElementById("debug").innerHTML = "Debug Diagram"
+  document.getElementById("div1").style.height= "250px"
+  document.getElementById("div1").style.width= "800px"
+  document.getElementById("frameonsala").style.marginTop= "-1100px";
+  
+
+  
+}
+</script>
+
+<style>
+
+#div1{
+  width: 800px;
+  height: 230px;
+  overflow: hidden;
+  border: None
+}
+
+ #frameonsala{
+   width:800px;
+   height:2070px;
+   margin-top: -1100px;
+   margin-left:-5px;
+   margin-bottom: -50px;
+   border-bottom: None;
+   border-right: None;
+
+}
+
+</style>
+
+
+
+<p id="debug"></p>
+
+<h4> Onsala</h4>
+ <button onclick="visardiagram()">Visardiagram</button> 
+  <button onclick="diagram()">Diagram</button>
+
+<div id="div1">
+<iframe id="frameonsala" src="http://www.oso.chalmers.se/weather/index.html#windspeed" scrolling="no">
+
+</iframe>
+
+</div>
