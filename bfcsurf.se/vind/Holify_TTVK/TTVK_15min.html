@@ -1,1 +1,33 @@
-<iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=48" style="width:50%; height:170px;"></iframe>
+
+<script type="text/javascript">
+
+function Time2h(){
+  document.getElementById("frameHolify"). src="https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=8"
+}
+
+function Time12h(){
+  document.getElementById("frameHolify").src = "https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=48"
+}
+
+
+</script>
+
+<style>
+#frameHolify{
+   width: 600px;
+   height:200px;
+   border: 2px solid red;
+   padding-top:10px;
+}
+
+
+</style>
+
+<p>
+ <button onclick="Time2h()">2h</button> 
+ <button onclick="Time12h()">12h</button>
+ 
+</p>
+
+
+<iframe id="frameHolify"src="https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=8" /iframe>
