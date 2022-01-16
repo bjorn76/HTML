@@ -1,0 +1,63 @@
+<script type="text/javascript">
+
+function WindVector(){
+  document.getElementById("frameonsalaPNG").src = "http://www.oso.chalmers.se/weather/plots/wr.png"
+}
+
+function WindSpeed(){
+  document.getElementById("frameonsalaPNG").src = "http://www.oso.chalmers.se/weather/plots/windspeed.png"
+}
+
+function AirTemp(){
+  document.getElementById("frameonsalaPNG").src = "http://www.oso.chalmers.se/weather/plots/temperature.png"
+}
+
+function WaterTemp(){
+  document.getElementById("frameonsalaPNG").src = "http://www.oso.chalmers.se/weather/plots/water_temperature.png"
+}
+function WaterLevel(){
+  document.getElementById("frameonsalaPNG").src = "http://www.oso.chalmers.se/weather/plots/water_level.png"
+}
+
+
+</script>
+
+<style>
+
+ #OnsalaPNG{
+   width: 620px;
+   height: 520px;
+   border: 2px solid red;
+   padding-left:10px;
+   padding-top:10px;
+
+}
+
+ #frameonsalaPNG{
+   width: 600px;
+   height: 500px;
+   border: None
+   /* border: 2px solid green;  */
+   
+}
+
+</style>
+
+
+
+<p>
+ <button onclick="WindVector()">Vector</button> 
+ <button onclick="WindSpeed()">Wind Speed</button>
+ <button onclick="AirTemp()">Air Temp</button>
+ <button onclick="WaterLevel()">Water Level</button>
+ <button onclick="WaterTemp()">Water Temp</button>
+ 
+</p>
+
+
+<div id="OnsalaPNG">
+
+<iframe id="frameonsalaPNG" src="http://www.oso.chalmers.se/weather/plots/wr.png" scrolling="no">
+</iframe>
+
+</div>
