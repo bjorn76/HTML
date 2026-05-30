@@ -1,0 +1,163 @@
+<!-- 
+
+ border: 2px slid green;
+
+border: 2px solid blue;
+
+border: 2px solid red; 
+
+Haby
+data-spot="47935"
+TT
+
+Hanstholm
+48040
+
+
+-->
+
+
+
+<style>
+
+    .pagetitle {
+        /*background: lightblue;*/
+        margin-bottom: 2px; 
+        font-family: sans-serif;
+        font-size: large;
+        font-weight: bold;
+
+
+
+
+    }
+  
+    .wg-target{
+        background: lightblue;
+        margin-top: 0 ;
+        padding:1;
+        top:0 ;
+        
+        
+    }
+
+  
+    .wg-title { 
+        /*background: lightgreen; */
+        font-weight: bold; 
+        font-size: 1.1em; 
+        cursor: pointer; 
+        font-family: sans-serif; 
+        padding: 2px; 
+       
+        
+
+    }
+  
+
+
+    .wg-card { 
+        /*background:lightcoral; */
+        padding: 4px; 
+        border-radius: 6px; 
+        margin-bottom: 5px; 
+        
+
+        
+        
+    }
+
+</style>
+
+
+
+
+<div class="windguru-widget-container" style="margin-bottom: 25px;">
+    <div class= "pagetitle">📍Bohuslän Prognos 💨</div>
+    <div class="wg-target" data-spot="47935"></div>
+</div>
+
+
+<details class="wg-card" >
+    <summary class="wg-title">📍 Torkelstorp 💨</summary>
+    <div style="margin-top: 5px;"> <div class="wg-target" data-spot="47942"></div>
+    </div>
+</details>
+
+
+
+<details class="wg-card" >
+    <summary class="wg-title">📍 Hanstholm 💨</summary>
+    <div style="margin-top: 5px;"> <div class="wg-target" data-spot="48040"></div>
+    </div>
+</details>
+
+
+
+<script>
+(function() {
+    // 1. MASTER PARAMETERS: Change these once to update ALL widgets globally!
+    const globalParams = {
+        "m": "100",
+        "wj": "ms",            // Wind speed unit (m/s)
+        "tj": "c",             // Temp unit (Celsius)
+        "waj": "m",            // Wave unit (meters)
+        "odh": "5",            // Start hour (5 AM)
+        "doh": "23",           // End hour (11 PM)
+        "fhours": "240",       // Forecast range (240 hours)
+        "hrsm": "1",
+        "vt": "forecasts",
+        "lng": "en",
+        "idbs": "1",
+        "p": "WINDSPD,GUST,SMER,TMP,HTSGW,PERPW,DIRPW" 
+    };
+
+    // 2. WIDGET GENERATION LOGIC
+    function loadWindguruWidget(element) {
+        if (element.getAttribute('data-loaded')) return; // Don't reload if already built
+        
+        const spotId = element.getAttribute('data-spot');
+        const uniqueId = "wg_template_" + spotId + "_" + Math.floor(Math.random() * 100000);
+        
+        // Build individual element wrapper required by Windguru script
+        element.id = uniqueId;
+        
+        // Merge the unique spot ID & UI wrapper into the main parameters template
+        let arg = [`s=${spotId}`, `uid=${uniqueId}`];
+        for (let key in globalParams) {
+            arg.push(`${key}=${globalParams[key]}`);
+        }
+        
+        // Dynamically build and append the script to prevent conflicts
+        const script = document.createElement("script");
+        script.src = "https://www.windguru.cz/js/widget.php?" + arg.join("&");
+        element.appendChild(script);
+        
+        element.setAttribute('data-loaded', 'true');
+    }
+
+    // 3. EXECUTION LOGIC
+    function init() {
+        // Immediately load the first widget (Main Spot)
+        const mainSpot = document.querySelector('.windguru-widget-container .wg-target');
+        if (mainSpot) loadWindguruWidget(mainSpot);
+
+        // Lazy load the collapsed widgets ONLY when a user clicks expand
+        document.querySelectorAll('details.wg-card').forEach(detailsEl => {
+            detailsEl.addEventListener('toggle', function() {
+                if (detailsEl.open) {
+                    const target = detailsEl.querySelector('.wg-target');
+                    if (target) loadWindguruWidget(target);
+                }
+            });
+        });
+    }
+
+    // Run script cleanly safely within WordPress environment
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();
+</script>
