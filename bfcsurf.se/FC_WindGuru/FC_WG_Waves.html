@@ -110,19 +110,22 @@ Created 2026-05-30
 <script>
 (function() {
     // 1. MASTER PARAMETERS: Change these once to update ALL widgets globally!
+// 1. MASTER PARAMETERS: Change these once to update ALL widgets globally!
     const globalParams = {
         "m": "100",
+        "mw": "85",            // Model filter crucial for wave display compatibility
         "wj": "ms",            // Wind speed unit (m/s)
         "tj": "c",             // Temp unit (Celsius)
         "waj": "m",            // Wave unit (meters)
+        "tij": "cm",           // Tide unit (cm)
         "odh": "5",            // Start hour (5 AM)
         "doh": "23",           // End hour (11 PM)
         "fhours": "240",       // Forecast range (240 hours)
-        "hrsm": "1",
+        "hrsm": "2",           // Set to 2 to properly align wave data blocks
         "vt": "forecasts",
         "lng": "en",
         "idbs": "1",
-        "p": "WINDSPD,GUST,SMER,TMP,HTSGW,PERPW,DIRPW" 
+        "p": "WINDSPD,GUST,SMER,HTSGW,PERPW,DIRPW,TMP" // Includes Wave Height, Period, and Direction
     };
 
     // 2. WIDGET GENERATION LOGIC
