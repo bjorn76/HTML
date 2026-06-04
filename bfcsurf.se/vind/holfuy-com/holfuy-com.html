@@ -1,0 +1,119 @@
+<!-- 
+ holfuy-com.html 
+ 
+Created 2026-06-04
+Varberg (926)
+Båstad / Hovs Hallar (127)
+Kungsbackafjorden TTVK (1555)
+Marstrand/Tjuvkil (231)
+Klagshamn (589)
+Öland (1488)
+
+
+/Björn Johansson
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holfuy Widgets</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #container01 {
+            border:2px solid dodgerblue;
+        }
+
+        #container02 {
+            border:2px solid Red;
+            
+        }
+
+
+        .hf-card { 
+        /* background:lightcoral; */
+        background:#d6d3d371;
+        padding-bottom: 5;
+        /*border:2px solid DodgerBlue; */
+        
+        
+    }
+
+
+    </style>
+</head>
+<body>
+
+    <div  id="container01" class="hf-card " >
+    </div>
+
+    
+    <div  id="container02" class="hf-card " >
+    </div>
+    
+
+
+
+    <script>
+      
+        function createHolfuyWidgets(station, containerId) {
+            const container = document.createElement('div');
+
+            container.style.display = 'flex';
+            container.style.alignItems = 'flex-start';
+            container.style.gap = '10px';
+            //container.style.border = '2px';
+
+            // Wind widget
+            const wind = document.createElement('iframe');
+            wind.setAttribute('frameborder', '1');
+            wind.setAttribute('marginheight', '2');
+            wind.setAttribute('marginwidth', '2');
+            wind.setAttribute('scrolling', 'No');
+            wind.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=wind`;
+            //wind.style.width = '180px';
+            //wind.style.maxHeight = '200px';
+            wind.style.height = '180px';
+
+            // Average widget
+            const average = document.createElement('iframe');
+            average.setAttribute('frameborder', '1');
+            average.setAttribute('marginheight', '1');
+            average.setAttribute('marginwidth', '1');
+            average.setAttribute('scrolling', 'Yes');
+            average.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=average&avgrows=96`;
+            //average.style.width = '720px';
+            //average.style.maxHeight = '180px';
+            //average.style.height = '180px';
+
+            container.appendChild(wind);
+            container.appendChild(average);
+
+            return container;
+        }
+
+
+
+        //document.body.appendChild(createHolfuyWidgets(1798));
+        document.getElementById('container01')
+                .appendChild(createHolfuyWidgets(1798));
+
+        document.getElementById('container02')
+                .appendChild(createHolfuyWidgets(1555));
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>
