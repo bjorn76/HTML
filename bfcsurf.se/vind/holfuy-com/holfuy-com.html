@@ -1,20 +1,20 @@
 <!-- 
  holfuy-com.html 
- 
 Created 2026-06-04
+
+Tjörn 1944
+    Marstrand/Tjuvkil (231)
+Kungsbackafjorden TTVK (1555)
+Åsen
 Varberg (926)
 Båstad / Hovs Hallar (127)
-Kungsbackafjorden TTVK (1555)
-Marstrand/Tjuvkil (231)
 Klagshamn (589)
-Öland (1488)
-
+    Öland (1488)
 
 15 min
 <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1798&su=km/h&t=C&lang=en&mode=average&avgrows=32" style="width:100%; height:170px;"></iframe>
 
 <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1798&su=km/h&t=C&lang=en&mode=mini" style="width:180px; height:120px;"></iframe>
-
 
 
 /Björn Johansson
@@ -43,9 +43,7 @@ Klagshamn (589)
         }
 
         .hf-title { 
-         background:#d6d3d371;
         /* background:#d6d3d371; */
-               
         /* border:2px solid Red; */
         }
         
@@ -55,7 +53,7 @@ Klagshamn (589)
         background:#d6d3d371;
         padding-top: 5px;
         padding-bottom: 5px;
-        border:2px solid DodgerBlue;
+        /* border:2px solid DodgerBlue; */
         }
         
         
@@ -66,26 +64,20 @@ Klagshamn (589)
 </head>
 <body>
 
-    <!-- <div class="hf-card" id="TT" > </div> -->
+    
 
-
-
-  <details>
+    <details>
         <summary class="hf-title">📍 Tjörn 💨</summary>
         <div class="hf-card" id="Tjorn" > </div>
     </details>
-
     
     <details>
-        <summary class="hf-title">📍 TT 💨</summary>
-        <div class="hf-card" id="TT" > </div>
+        <summary class="hf-title">📍 TT, Kungsbackafjorden 💨</summary>
+        <div class="hf-card" id="Torkelstorp" > </div>
     </details>
 
-
-
-
     <details>
-        <summary class="hf-title">📍 Åsen 💨</summary>
+        <summary class="hf-title">📍 Åsen, Kungsbackafjorden 💨</summary>
         <div  class="hf-card" id="Asen" > </div>
     </details>
     
@@ -93,45 +85,33 @@ Klagshamn (589)
         <summary class="hf-title">📍 Varberg 💨</summary>
         <div class="hf-card"  id="Varberg" > </div>
     </details>
-    
+
+    <details>
+        <summary class="hf-title">📍 Båstad 💨</summary>
+        <div class="hf-card"  id="Bastad" > </div>
+    </details>
 
     <details>
         <summary class="hf-title">📍 Klagshamn 💨</summary>
         <div class="hf-card"  id="Klagshamn" > </div>
     </details>
 
-
-
-
-
-
-
-
-<!--     <details class="hf-card" >
-        <summary class="hf-title">📍 Ålebodarna 💨</summary>
-        <div  id="Alebodarna" > </div>
+    <details class="hf-card" >
+        <summary class="hf-title">📍 Landskrona 💨</summary>
+        <div class="hf-card" id="Landskrona" > </div>
     </details>
- -->
 
-<!--     <details class="hf-card" >
-        <summary class="hf-title">📍 Öland 💨</summary>
-        <div  id="Oland" > </div>
-    </details> -->
-
-
-    
-    
 
 
 
     <script>
       
-        function createHolfuyWidgets(station, containerId) {
+        function createHolfuyWidgets(station) {
             const container = document.createElement('div');
 
             container.style.display = 'flex';
             container.style.alignItems = 'flex-start';
-            container.style.gap = '30px';
+            container.style.gap = '50px';
             //container.style.border = '2px';
 
             // Wind widget
@@ -140,19 +120,17 @@ Klagshamn (589)
             wind.setAttribute('marginheight', '1');
             wind.setAttribute('marginwidth', '1');
             wind.setAttribute('scrolling', 'no');
-            //wind.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=wind`;
-            //<!-- <iframe frameborder="0" marginheight="1" marginwidth="1" scrolling="no"  src="https://widget.holfuy.com/?station=1798&su=km/h&t=C&lang=en&mode=mini" style="width:180px; height:120px;"></iframe> -->
-            wind.src = `https://widget.holfuy.com/?station=${station}&su=km/h&t=C&lang=en&mode=mini`
+            wind.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=mini`;
             wind.style.width = '180px';
             //wind.style.maxHeight = '200px';
             wind.style.height = '120px';
-            wind.style.padding = '20px 0px 0px 25px';
-            wind.style.scale = '128%'
-            //wind.style.right = '80px'
+            wind.style.padding = '2px 0px 0px 5px';
+            wind.style.transform = 'scale(1.28)';
+            wind.style.transformOrigin = 'top left';
 
             // Average widget
             const average = document.createElement('iframe');
-            average.setAttribute('frameborder', '1');
+            average.setAttribute('frameborder', '0');
             average.setAttribute('marginheight', '1');
             average.setAttribute('marginwidth', '1');
             average.setAttribute('scrolling', 'Yes');
@@ -168,29 +146,16 @@ Klagshamn (589)
             return container;
         }
 
-
-
-        //document.body.appendChild(createHolfuyWidgets(1798));
-        
-        
-        
         document.getElementById('Asen').appendChild(createHolfuyWidgets(1798));
-        document.getElementById('TT').appendChild(createHolfuyWidgets(1555));
+        document.getElementById('Torkelstorp').appendChild(createHolfuyWidgets(1555));
         document.getElementById('Varberg').appendChild(createHolfuyWidgets(926));
-
         document.getElementById('Klagshamn').appendChild(createHolfuyWidgets(589));
-        document.getElementById('Oland').appendChild(createHolfuyWidgets(1488));
-
+        document.getElementById('Landskrona').appendChild(createHolfuyWidgets(216));
+        document.getElementById('Tjorn').appendChild(createHolfuyWidgets(1944));
+        document.getElementById('Bastad').appendChild(createHolfuyWidgets(127));
         
-        document.getElementById('Alebodarna').appendChild(createHolfuyWidgets(216));
-
-        document.getElementById('Tjörn').appendChild(createHolfuyWidgets(1944));
-        
-    
 
         //document.getElementById('xxxx').appendChild(createHolfuyWidgets(####));
-
-
 
 
     </script>
