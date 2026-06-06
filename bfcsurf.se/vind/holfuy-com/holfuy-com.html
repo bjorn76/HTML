@@ -1,7 +1,18 @@
 <!-- 
  holfuy-com.html 
-Created 2026-06-04
+ =================
+ Is used to show a number of Holfuy wind meters in Sweden.
 
+ 
+
+Change log:
+2026-06-04 Initial version created by AI
+2026-06-05 Published. Could be (improved for mobiles)
+2026-06-06
+
+
+Notes:
+========
 Tjörn 1944
     Marstrand/Tjuvkil (231)
 Kungsbackafjorden TTVK (1555)
@@ -44,7 +55,8 @@ Klagshamn (589)
 
         .hf-title { 
         /* background:#d6d3d371; */
-        /* border:2px solid Red; */
+            border:2px solid Red;
+            font-weight: bold;
         }
         
 
@@ -54,6 +66,23 @@ Klagshamn (589)
         padding-top: 5px;
         padding-bottom: 5px;
         /* border:2px solid DodgerBlue; */
+        }
+
+        .hf-wind {
+            width: 180px;
+            height: 120px;
+            padding: 2px 0 0 5px;
+        }
+
+        .hf-avg {
+            width: 100%;
+            height: 170px;
+            
+        }
+        .hf-mini {
+            width: 180px;
+            height: 120px;
+            padding: 20px 0px 20px 0px;
         }
         
         
@@ -66,12 +95,19 @@ Klagshamn (589)
 
     
 
+
+<!--     <div class="hf-mini" id="TorkelstorpMini" > </div>
+    <br>
+    <div class="hf-mini" id="AsenMini" > </div>
+    <br>
+ -->
+
     <details>
         <summary class="hf-title">📍 Tjörn 💨</summary>
-        <div class="hf-card" id="Tjorn" > </div>
+        <div class="hf-avg" id="b2b2" > </div>
     </details>
     
-    <details>
+<!--     <details>
         <summary class="hf-title">📍 TT, Kungsbackafjorden 💨</summary>
         <div class="hf-card" id="Torkelstorp" > </div>
     </details>
@@ -99,12 +135,47 @@ Klagshamn (589)
     <details class="hf-card" >
         <summary class="hf-title">📍 Landskrona 💨</summary>
         <div class="hf-card" id="Landskrona" > </div>
-    </details>
+    </details> -->
 
 
 
 
     <script>
+
+        function createHolfuyMini(station) {
+            const containerMini = document.createElement('div');
+
+            containerMini.style.display = 'flex';
+            containerMini.style.alignItems = 'flex-start';
+            containerMini.style.gap = '50px';
+            //container.style.border = '2px';
+
+            // Wind widget
+            const mini = document.createElement('iframe');
+            mini.setAttribute('frameborder', '0');
+            mini.setAttribute('marginheight', '1');
+            mini.setAttribute('marginwidth', '1');
+            mini.setAttribute('scrolling', 'no');
+            mini.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=mini`;
+            mini.className = 'hf-wind';
+            mini.style.transform = 'scale(1.28)';
+            mini.style.transformOrigin = 'top left';
+
+            mini.loading = 'lazy';
+          
+            containerMini.appendChild(mini);
+
+            return containerMini;
+        }
+
+        document.getElementById('TorkelstorpMini').appendChild(createHolfuyMini(1555));
+        document.getElementById('AsenMini').appendChild(createHolfuyMini(1798));
+        
+        
+
+
+
+
       
         function createHolfuyWidgets(station) {
             const container = document.createElement('div');
@@ -121,12 +192,12 @@ Klagshamn (589)
             wind.setAttribute('marginwidth', '1');
             wind.setAttribute('scrolling', 'no');
             wind.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=mini`;
-            wind.style.width = '180px';
-            //wind.style.maxHeight = '200px';
-            wind.style.height = '120px';
-            wind.style.padding = '2px 0px 0px 5px';
+            wind.className = 'hf-wind';
             wind.style.transform = 'scale(1.28)';
             wind.style.transformOrigin = 'top left';
+
+            
+
 
             // Average widget
             const average = document.createElement('iframe');
@@ -134,25 +205,35 @@ Klagshamn (589)
             average.setAttribute('marginheight', '1');
             average.setAttribute('marginwidth', '1');
             average.setAttribute('scrolling', 'Yes');
-            average.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=average&avgrows=48`;
-            average.style.width = '100%';
+            average.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=average&avgrows=24`;
+            average.className = 'hf-avg';
+            //average.id = '${station}_avg'
+            //average.style.width = '100%';
             //average.style.maxWidth = '720px';
             //average.style.maxHeight = '180px';
             //average.style.height = '180px';
+            
+            wind.loading = 'lazy';
+            average.loading = 'lazy';
 
-            container.appendChild(wind);
+            
+            if (window.innerWidth > 900) {
+                container.appendChild(wind);
+            }
+            
+
             container.appendChild(average);
 
             return container;
         }
 
-        document.getElementById('Asen').appendChild(createHolfuyWidgets(1798));
-        document.getElementById('Torkelstorp').appendChild(createHolfuyWidgets(1555));
-        document.getElementById('Varberg').appendChild(createHolfuyWidgets(926));
-        document.getElementById('Klagshamn').appendChild(createHolfuyWidgets(589));
-        document.getElementById('Landskrona').appendChild(createHolfuyWidgets(216));
-        document.getElementById('Tjorn').appendChild(createHolfuyWidgets(1944));
-        document.getElementById('Bastad').appendChild(createHolfuyWidgets(127));
+        document.getElementById('b2b2').appendChild(createHolfuyWidgets(1798));
+        //document.getElementById('Torkelstorp').appendChild(createHolfuyWidgets(1555));
+        //document.getElementById('Varberg').appendChild(createHolfuyWidgets(926));
+        //document.getElementById('Klagshamn').appendChild(createHolfuyWidgets(589));
+        //document.getElementById('Landskrona').appendChild(createHolfuyWidgets(216));
+        //document.getElementById('Tjorn').appendChild(createHolfuyWidgets(1944));
+        //document.getElementById('Bastad').appendChild(createHolfuyWidgets(127));
         
 
         //document.getElementById('xxxx').appendChild(createHolfuyWidgets(####));

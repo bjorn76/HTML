@@ -1,0 +1,61 @@
+
+<script type= "text/javascript">
+
+
+function visardiagram(){
+  //document.getElementById("debug").innerHTML = "Debug Visardiagram"
+  document.getElementById("div1").style.height= "660px"
+  document.getElementById("div1").style.width= "660px"
+  document.getElementById("frameonsala").style.marginTop= "0px";
+
+  
+}
+
+function diagram(){
+  //document.getElementById("debug").innerHTML = "Debug Diagram"
+  document.getElementById("div1").style.height= "250px"
+  document.getElementById("div1").style.width= "800px"
+  document.getElementById("frameonsala").style.marginTop= "0px";
+  
+
+  
+}
+</script>
+
+<style>
+
+#div1{
+  width: 800px;
+  height: 900px;
+  overflow: hidden;
+}
+
+ #frameonsala{
+   width:800px;
+   height:800px;
+   margin-top: -100px;
+   margin-left:05px;
+   margin-bottom: 0px;
+   border-bottom: None
+
+}
+
+</style>
+
+
+
+<p id="debug"></p>
+
+<h4> Onsala</h4>
+ <button onclick="visardiagram()">Visardiagram</button> 
+  <button onclick="diagram()">Diagram</button>
+
+<div id="div1" >
+<iframe id="frameonsala" src="https://www.svt.se/vader/sok/?q=varberg" 
+ scrolling="no"
+>
+
+</iframe>
+
+</div>
+

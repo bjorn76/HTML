@@ -1,140 +1,89 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <!-- Crucial for mobile responsiveness -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blank Responsive WordPress Page</title>
+<!-- 
+ kungsbackafjorden.html
+
+ Displays two holfuy meters and the ViVa meter on Nidingen
+
+
+ -->
+
+<style>
+    /* Isolerad container för dina vind-widgets */
+    .wind-widget-container {
+        width: 100%;
+        max-width: 1200px;
+        /* margin: 0 auto;*/
+        /*padding: clamp(1rem, 3vw, 2.5rem);*/
+        box-sizing: border-box;
+    }
+
+    /* Styling för knapparna */
+    .wind-widget-container button {
+        padding: 6px 12px;
+        margin-right: 5px;
+        cursor: pointer;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: larger;
+        font-weight: bold;
+    }
     
-    <!-- Simulates <?php wp_head(); ?> -->
-    <style>
-        /* ==========================================================================
-           1. Core Reset & Global Variables
-           ========================================================================== */
-        :root {
-            /* Responsive typography scales using CSS clamp() */
-            --wp-text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-            --wp-heading-lg: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
-            
-            /* Responsive spacing utility */
-            --wp-spacing-container: clamp(1rem, 3vw, 2.5rem);
-        }
+    .wind-widget-container button:hover {
+        background-color: #e0e0e0;
+    }
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            box-sizing: border-box;
-            background-color: #ffffff;
-            color: #111111;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            font-size: var(--wp-text-base);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
-
-        /* ==========================================================================
-           2. Layout Container (Blank Content Area)
-           ========================================================================== */
-        .site-main {
-            width: 100%;
-            max-width: 1200px; /* Standard desktop max-width */
-            margin-left: auto;
-            margin-right: auto;
-            padding: var(--wp-spacing-container);
-        }
-
-        /* Fluid elements inside the blank page */
-        img, video, iframe {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* ==========================================================================
-           3. WordPress Admin Bar Push (Critical for Mobile)
-           ========================================================================== */
-        /* Desktop Admin Bar height */
-        body.admin-bar {
-            margin-top: 32px;
-        }
-
-        /* Mobile Responsive Breakpoints for WordPress Admin Bar */
-        @media screen and (max-width: 782px) {
-            body.admin-bar {
-                margin-top: 46px; /* Admin bar expands vertically on small mobile screens */
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            body.admin-bar {
-                /* On absolute tiny screens/older environments, the admin bar becomes absolute */
-                margin-top: 0; 
-                padding-top: 46px;
-            }
-        }
-
-        
-        .Holfuy{
-        width: 860px;
-        height:200px;
-        border: 2px solid red;
-        padding-top:10px;
-        }
-
-    </style>
+    /* Responsiv Holfuy iframe-klass */
+    .Holfuy {
+        display: block;
+        width: 100%;
+        max-width: 860px; /* Maxbredd på desktop */
+        height: 180px; 
+        border: 2px solid #869ce4;
+        margin-top: 10px;   
+        /*margin-bottom: 10px;*/
+        box-sizing: border-box;
+        padding-top: 5px;
+    }
+</style>
 
 
 
 
-</head>
-<body class="page template-blank-page logged-in admin-bar">
+<div class="wind-widget-container">
 
-    <!-- The actual empty content canvas -->
-    <main id="primary" class="site-main">
-        <!-- Any text or builder blocks dropped here will automatically scale gracefully from mobile to desktop -->
-
-
-
-    <p><button onclick="Time6h()">6h</button> <button onclick="Time12h()">12h</button> <button onclick="Time24h()">24h</button></p>
+    <p>
+        <button onclick="changeHolfuyTime(24)">6h</button> 
+        <button onclick="changeHolfuyTime(48)">12h</button> 
+        <button onclick="changeHolfuyTime(96)">24h</button>
+    </p>
     
-    <iframe class="Holfuy" id="frameHolfuy" src="https://widget.holfuy.com/?station=1555&amp;su=m/s&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=24" iframe=""></iframe>
 
-    <iframe class="Holfuy"  id="frameHolfuy2" src="https://widget.holfuy.com/?station=1798&amp;su=m/s&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=24" iframe=""></iframe>
+    <details>
+        <summary class="hf-title">📍 TT, Kungsbackafjorden 💨</summary>
+        <div class="hf-card" id="Torkelstorp" > </div>
+    </details>
 
-    </main>
-
-    <!-- Simulates <?php wp_footer(); ?> -->
-    <script>
-        console.log("Responsive WordPress blank canvas loaded.");
-
+    <details>
+        <summary class="hf-title">📍 Åsen, Kungsbackafjorden 💨</summary>
+        <div  class="hf-card" id="Asen" > </div>
+    </details>
 
 
 
-    </script>
-    <script type="text/javascript">
-function Time6h(){
-  document.getElementById("frameHolify"). src="https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=24"
-}
 
-function Time12h(){
-  document.getElementById("frameHolify").src = "https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=48"
-}
+    <iframe class="Holfuy" id="frameHolfuy1" src="https://widget.holfuy.com/?station=1555&amp;su=m/s&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=24"></iframe>
 
-function Time24h(){
-  document.getElementById("frameHolify").src = "https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=96"
+    <iframe class="Holfuy" id="frameHolfuy2" src="https://widget.holfuy.com/?station=1798&amp;su=m/s&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=24"></iframe>
+
+</div>
+
+<script type="text/javascript">
+function changeHolfuyTime(rows) {
+    // Uppdaterar station 1555
+    document.getElementById("frameHolfuy1").src = "https://widget.holfuy.com/?station=1555&su=m/s&t=C&lang=en&mode=average&avgrows=" + rows;
+    
+    // Uppdaterar station 1798
+    document.getElementById("frameHolfuy2").src = "https://widget.holfuy.com/?station=1798&su=m/s&t=C&lang=en&mode=average&avgrows=" + rows;
 }
 </script>
-
-
-
-
-
-
-</body>
-</html>
