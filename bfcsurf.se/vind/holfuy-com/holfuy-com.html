@@ -1,7 +1,18 @@
 <!-- 
  holfuy-com.html 
-Created 2026-06-04
+ =================
+ Is used to show a number of Holfuy wind meters in Sweden.
 
+ 
+
+Change log:
+2026-06-04 Initial version created by AI
+2026-06-05 Published. Could be (improved for mobiles)
+2026-06-06
+
+
+Notes:
+========
 Tjörn 1944
     Marstrand/Tjuvkil (231)
 Kungsbackafjorden TTVK (1555)
@@ -55,6 +66,19 @@ Klagshamn (589)
         padding-bottom: 5px;
         /* border:2px solid DodgerBlue; */
         }
+
+        .hf-wind {
+            width: 180px;
+            height: 120px;
+            padding: 2px 0 0 5px;
+        }
+
+        .hf-avg {
+            width: 100%;
+            height: 170px;
+            
+        }
+
         
         
     
@@ -121,12 +145,12 @@ Klagshamn (589)
             wind.setAttribute('marginwidth', '1');
             wind.setAttribute('scrolling', 'no');
             wind.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=mini`;
-            wind.style.width = '180px';
-            //wind.style.maxHeight = '200px';
-            wind.style.height = '120px';
-            wind.style.padding = '2px 0px 0px 5px';
+            wind.className = 'hf-wind';
             wind.style.transform = 'scale(1.28)';
             wind.style.transformOrigin = 'top left';
+
+            
+
 
             // Average widget
             const average = document.createElement('iframe');
@@ -135,12 +159,21 @@ Klagshamn (589)
             average.setAttribute('marginwidth', '1');
             average.setAttribute('scrolling', 'Yes');
             average.src = `https://widget.holfuy.com/?station=${station}&su=m/s&t=C&lang=en&mode=average&avgrows=48`;
-            average.style.width = '100%';
+            average.className = 'hf-avg';
+            //average.style.width = '100%';
             //average.style.maxWidth = '720px';
             //average.style.maxHeight = '180px';
             //average.style.height = '180px';
+            
+            wind.loading = 'lazy';
+            average.loading = 'lazy';
 
-            container.appendChild(wind);
+            
+            if (window.innerWidth > 900) {
+                container.appendChild(wind);
+            }
+            
+
             container.appendChild(average);
 
             return container;
