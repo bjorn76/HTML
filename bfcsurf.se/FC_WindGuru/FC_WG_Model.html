@@ -1,0 +1,278 @@
+<!-- 
+ FC_WG_Model.html s an updated version of FC_WG_Wave.html 
+ but with wave FC optional (spots that offers that.
+ Further more can you switch between different models (100, 103, 109) with a click of a button.
+Created 2026-06-22
+/Björn Johansson
+-->
+
+<style>
+    .pagetitle {
+        /*background: lightblue;*/
+        margin-bottom: 2px; 
+        font-family: sans-serif;
+        font-size: large;
+        font-weight: bold;
+    }
+  
+    .wg-target{
+        background: lightblue;
+        /*margin-top: 0 ;*/
+        padding-top:1;
+        padding-bottom: 1;
+        /*top:0 ;*/
+    }
+
+    .wg-title { 
+        /*background: lightgreen; */
+        font-weight: bold; 
+        font-size: 1.1em; 
+        cursor: pointer; 
+        font-family: sans-serif; 
+        /* padding: 2px; */
+    }
+
+    .wg-card { 
+        /*background:lightcoral; */
+        padding: 4px; 
+        border-radius: 6px; 
+        margin-bottom: 5px; 
+    }
+
+    /* Styles for the control buttons */
+    .model-controls {
+        margin-bottom: 15px;
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+    .model-controls button {
+        padding: 5px 12px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+    .model-controls button:hover {
+        background-color: #e2e6ea;
+    }
+    .control-group {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        /* border-right: 1px solid #ccc; */
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .control-group:last-child {
+        border-right: none;
+    }
+</style>
+
+<div class="model-controls">
+    <div class="control-group">
+        <span>Forecast Model: </span>
+        <button class="wg-model-btn" data-model="100">WG (100)</button>
+        <button class="wg-model-btn" data-model="103">YR - 103</button>
+        <button class="wg-model-btn" data-model="109">DMI - 109</button>
+    </div>
+    <div class="control-group">
+        <button id="wg-wave-toggle-btn">Waves: ON</button>
+    </div>
+</div>
+
+<div class="windguru-widget-container" style="margin-bottom: 25px;">
+    <div class="pagetitle">📍 Bohuslän 💨</div>
+    <div class="wg-target" data-spot="47935"></div>
+</div>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Hönö 💨</summary>
+    <div class="wg-target" data-spot="47938"></div>
+</details>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Torkelstorp 💨</summary>
+    <div class="wg-target" data-spot="47942"></div>
+</details>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Varberg 💨</summary>
+    <div class="wg-target" data-spot="946245"></div>
+</details>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Habo Ljung 💨</summary>
+    <div class="wg-target" data-spot="9455"></div>
+</details>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Klagshamn 💨</summary>
+    <div class="wg-target" data-spot="737961"></div>
+</details>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Hanstholm 💨</summary>
+    <div class="wg-target" data-spot="48040"></div>
+</details>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Brandon Bay 💨</summary>
+    <div class="wg-target" data-spot="141"></div>
+</details>
+
+<details class="wg-card">
+    <summary class="wg-title">📍 Rewa 💨</summary>
+    <div class="wg-target" data-spot="53"></div>
+</details>
+
+
+<script>
+(function() {
+    // ==========================================================
+    //  1. DEFAULT SETTINGS 
+    //  Change these variables to set the default page load state!
+    // ==========================================================
+    
+    // Set default model (e.g., "100", "103", or "109")
+    const DEFAULT_MODEL = "100"; 
+    
+    // Set default wave visibility (true = ON, false = OFF)
+    let wavesEnabled = true;     
+
+    // ==========================================================
+
+    // Parameter breakdown for toggling
+    const PARAM_VARS_WIND = "WINDSPD,GUST,SMER,TMP";
+    const PARAM_VARS_WAVES = ",HTSGW,PERPW,DIRPW"; // Kept comma at the front to merge easily
+
+    const globalParams = {
+        "m": DEFAULT_MODEL, 
+        "mw": "85",            
+        "wj": "ms",            
+        "tj": "c",             
+        "waj": "m",            
+        "tij": "cm",           
+        "odh": "5",            
+        "doh": "23",           
+        "fhours": "240",       
+        "hrsm": "2",           
+        "vt": "forecasts",
+        "lng": "en",
+        "idbs": "1",
+        "p": wavesEnabled ? (PARAM_VARS_WIND + PARAM_VARS_WAVES) : PARAM_VARS_WIND 
+    };
+
+    // 2. WIDGET GENERATION LOGIC
+    function loadWindguruWidget(wrapper) {
+        if (wrapper.getAttribute('data-loaded') === 'true') return; 
+        
+        const spotId = wrapper.getAttribute('data-spot');
+        const uniqueId = "wg_template_" + spotId + "_" + Math.floor(Math.random() * 100000);
+        
+        // FIX: Hard-wipe the wrapper. This destroys any old scripts AND old iframes 
+        // Windguru may have previously injected here.
+        wrapper.innerHTML = '';
+        
+        // Create a fresh inner target element for Windguru to attach to
+        const innerTarget = document.createElement('div');
+        innerTarget.id = uniqueId;
+        wrapper.appendChild(innerTarget);
+        
+        let arg = [`s=${spotId}`, `uid=${uniqueId}`];
+        for (let key in globalParams) {
+            arg.push(`${key}=${globalParams[key]}`);
+        }
+        
+        const script = document.createElement("script");
+        script.src = "https://www.windguru.cz/js/widget.php?" + arg.join("&");
+        wrapper.appendChild(script);
+        
+        wrapper.setAttribute('data-loaded', 'true');
+    }
+
+    // 3. WIDGET RELOAD HELPER
+    function reloadAllVisibleWidgets() {
+        const mainSpot = document.querySelector('.windguru-widget-container .wg-target');
+        if (mainSpot) {
+            mainSpot.setAttribute('data-loaded', 'false');
+            loadWindguruWidget(mainSpot); // The innerHTML wipe happens safely inside here
+        }
+
+        document.querySelectorAll('details.wg-card').forEach(detailsEl => {
+            const wrapper = detailsEl.querySelector('.wg-target');
+            if (wrapper) {
+                wrapper.setAttribute('data-loaded', 'false');
+                
+                if (detailsEl.open) {
+                    loadWindguruWidget(wrapper);
+                } else {
+                    wrapper.innerHTML = ''; // Keep hidden ones clean until opened
+                }
+            }
+        });
+    }
+
+    // 4. CONTROL FUNCTIONS
+    function switchModel(newModel) {
+        globalParams.m = newModel;
+        reloadAllVisibleWidgets();
+    }
+
+    function toggleWaves() {
+        wavesEnabled = !wavesEnabled; 
+        
+        globalParams.p = wavesEnabled ? (PARAM_VARS_WIND + PARAM_VARS_WAVES) : PARAM_VARS_WIND;
+        
+        const waveBtn = document.getElementById('wg-wave-toggle-btn');
+        if (waveBtn) {
+            waveBtn.innerText = wavesEnabled ? "Waves: ON" : "Waves: OFF";
+            waveBtn.style.backgroundColor = wavesEnabled ? "#d4edda" : "#f8d7da"; 
+        }
+
+        reloadAllVisibleWidgets();
+    }
+
+    // 5. EXECUTION LOGIC
+    function init() {
+        // Init Model buttons
+        document.querySelectorAll('.wg-model-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchModel(this.getAttribute('data-model'));
+            });
+        });
+
+        // Init Wave Toggle button
+        const waveBtn = document.getElementById('wg-wave-toggle-btn');
+        if (waveBtn) {
+            waveBtn.innerText = wavesEnabled ? "Waves: ON" : "Waves: OFF";
+            waveBtn.style.backgroundColor = wavesEnabled ? "#d4edda" : "#f8d7da";
+            waveBtn.addEventListener('click', toggleWaves);
+        }
+
+        // Load the main widget
+        const mainSpot = document.querySelector('.windguru-widget-container .wg-target');
+        if (mainSpot) loadWindguruWidget(mainSpot);
+
+        // Lazy load collapsed widgets
+        document.querySelectorAll('details.wg-card').forEach(detailsEl => {
+            detailsEl.addEventListener('toggle', function() {
+                if (detailsEl.open) {
+                    const wrapper = detailsEl.querySelector('.wg-target');
+                    if (wrapper) loadWindguruWidget(wrapper);
+                }
+            });
+        });
+    }
+
+    // Run script cleanly
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();
+</script>
