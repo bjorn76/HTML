@@ -46,7 +46,7 @@ Created 2026-06-22
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 30px;
     }
     .model-controls button {
         padding: 5px 12px;
@@ -62,8 +62,9 @@ Created 2026-06-22
     .control-group {
         display: flex;
         align-items: center;
-        gap: 5px;
-        border-right: 1px solid #ccc;
+        gap: 30px;
+        /* border-right: 1px solid #ccc; */
+        padding-left: 15px;
         padding-right: 15px;
     }
     .control-group:last-child {
@@ -74,9 +75,9 @@ Created 2026-06-22
 <div class="model-controls">
     <div class="control-group">
         <span>Forecast Model: </span>
-        <button class="wg-model-btn" data-model="100">100</button>
-        <button class="wg-model-btn" data-model="103">103</button>
-        <button class="wg-model-btn" data-model="109">109</button>
+        <button class="wg-model-btn" data-model="100">WG (100)</button>
+        <button class="wg-model-btn" data-model="103">YR - 103</button>
+        <button class="wg-model-btn" data-model="109">DMI - 109</button>
     </div>
     <div class="control-group">
         <button id="wg-wave-toggle-btn">Waves: ON</button>
