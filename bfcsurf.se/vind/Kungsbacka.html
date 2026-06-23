@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holfuy Widgets - Sweden</title>
+
+    <style>
+        :root {
+            --primary-color: #1e88e5;
+            --bg-card: #f5f5f5;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* Details & Summary Accordion Styling */
+        details {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: box-shadow 0.2s ease;
+        }
+
+        details[open] {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        summary {
+            padding: 14px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            background-color: #fff;
+            user-select: none;
+            outline: none;
+        }
+
+        summary:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Content Wrapper inside Accordion */
+        .card-content {
+            background: var(--bg-card);
+            border-top: 1px solid #e0e0e0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Time Controls Button Panel */
+        .controls-panel {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .btn-time {
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+
+        .btn-time:hover {
+            background: #ebeeec;
+            border-color: #999;
+        }
+
+        .btn-time.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Flexbox widget containers */
+        .widget-container {
+            display: flex;
+            flex-direction: column; /* Stack vertically on mobile */
+            gap: 15px;
+        }
+
+        /* iFrames responsive control */
+        .hf-iframe {
+            border: none;
+            background: transparent;
+            width: 100%;
+        }
+
+        .hf-mini {
+            height: 120px;
+            max-width: 180px;
+            margin: 0 auto; /* Center on mobile */
+        }
+
+        .hf-avg {
+            height: 170px;
+            flex-grow: 1;
+        }
+
+        /* Responsive Desktop Layout (Screens wider than 600px) */
+        @media (min-width: 600px) {
+            .widget-container {
+                flex-direction: row; /* Side-by-side on desktop */
+                align-items: center;
+            }
+            .hf-mini {
+                margin: 0; /* Left align on desktop */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="weather-dashboard"></div>
+
+    <script>
+    // Centralized list of stations. 
+    // active: true/false -> Show or hide the whole station accordion.
+    // openOnLoad: true/false -> Start with the accordion expanded.
+    // showMini / showAvg: true/false -> Independently control which iframes generate.
+    // avgRows: Number of rows to show initially. 
+    // (Note: Holfuy registers 4 rows per hour inside their graphs, so 4 rows = 1 hr, 12 rows = 3 hrs, 96 rows = 24 hrs, etc.)
+const stations = [
+{id: 1555, name: "TT, Kungsbackafjorden",active: true, openOnLoad: true, showMini: true,  showAvg: true, avgRows: 12 }, 
+ { id: 1798, name: "Åsen, Kungsbackafjorden", active: true, openOnLoad: true,  showMini: true,  showAvg: true, avgRows: 12 }
+    ];
+
+    // Presets definition for runtime mapping (Value: Holfuy rows parameter)
+    const timePresets = [
+               
+        { label: "12h", rows: 48 },
+        { label: "36h", rows: 144 }
+    ];
+
+    function changeStationRange(stationId, targetRows, clickedButton) {
+        // Find the correct iframe graph element linked to this specific station
+        const targetIframe = document.getElementById(`avg-${stationId}`);
+        if (!targetIframe) return;
+
+        // Extract and rewrite the source URL string parameter
+        let url = new URL(targetIframe.src);
+        url.searchParams.set('avgrows', targetRows);
+        targetIframe.src = url.toString();
+
+        // Update visual active state highlights on buttons inside the parent control panel
+        const panel = clickedButton.parentElement;
+        panel.querySelectorAll('.btn-time').forEach(btn => btn.classList.remove('active'));
+        clickedButton.classList.add('active');
+    }
+
+    function buildDashboard() {
+        const dashboard = document.getElementById('weather-dashboard');
+        
+        stations.forEach(station => {
+            if (!station.active) return;
+            if (!station.showMini && !station.showAvg) return; 
+
+            // 1. Create Accordion Wrapper (<details>)
+            const details = document.createElement('details');
+            if (station.openOnLoad) {
+                details.setAttribute('open', '');
+            }
+            
+            // 2. Create Title (<summary>)
+            const summary = document.createElement('summary');
+            summary.textContent = `📍 ${station.name} 💨`;
+            details.appendChild(summary);
+
+            // 3. Create Container Layout structure
+            const cardContent = document.createElement('div');
+            cardContent.className = 'card-content';
+
+            // 4. Inject Time Control Panel if the Average component graph exists
+            if (station.showAvg) {
+                const controlsPanel = document.createElement('div');
+                controlsPanel.className = 'controls-panel';
+                controlsPanel.insertAdjacentHTML('beforeend', '<span>History: </span>');
+
+                timePresets.forEach(preset => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-time';
+                    btn.textContent = preset.label;
+                    
+                    // Mark preset active if it matches original configuration
+                    if (station.avgRows === preset.rows) {
+                        btn.classList.add('active');
+                    }
+
+                    // On-click engine router rule execution
+                    btn.addEventListener('click', () => changeStationRange(station.id, preset.rows, btn));
+                    controlsPanel.appendChild(btn);
+                });
+
+                cardContent.appendChild(controlsPanel);
+            }
+
+            // 5. Setup Viewport flexbox structure split
+            const widgetContainer = document.createElement('div');
+            widgetContainer.className = 'widget-container';
+
+            // 6. Conditionally Build Mini Widget
+            if (station.showMini) {
+                const miniIframe = document.createElement('iframe');
+                miniIframe.className = 'hf-iframe hf-mini';
+                miniIframe.scrolling = 'no';
+                miniIframe.loading = 'lazy';
+                miniIframe.src = `https://widget.holfuy.com/?station=${station.id}&su=m/s&t=C&lang=en&mode=mini`;
+                widgetContainer.appendChild(miniIframe);
+            }
+
+            // 7. Conditionally Build Average Widget
+            if (station.showAvg) {
+                const avgIframe = document.createElement('iframe');
+                avgIframe.id = `avg-${station.id}`; // Explicit reference identifier
+                avgIframe.className = 'hf-iframe hf-avg';
+                avgIframe.scrolling = 'no';
+                avgIframe.loading = 'lazy';
+                avgIframe.src = `https://widget.holfuy.com/?station=${station.id}&su=m/s&t=C&lang=en&mode=average&avgrows=${station.avgRows}`;
+                widgetContainer.appendChild(avgIframe);
+            }
+
+            // Assemble components
+            cardContent.appendChild(widgetContainer);
+            details.appendChild(cardContent);
+            dashboard.appendChild(details);
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', buildDashboard);
+    </script>
+
+</body>
+</html>
