@@ -300,7 +300,7 @@ Created 2026-06-23
 
     // 5. EXECUTION LOGIC
     function init() {
-// Init Model buttons and set default active state
+        // Init Model buttons and set default active state
         document.querySelectorAll('.wg-model-btn').forEach(btn => {
             if (btn.getAttribute('data-model') === DEFAULT_MODEL) {
                 btn.classList.add('active'); // Set initial active button
@@ -310,7 +310,7 @@ Created 2026-06-23
             });
         });
 
-        // Init Wave Toggle button with standardized color
+        // Init Wave Toggle button with standardized colors
         const waveBtn = document.getElementById('wg-wave-toggle-btn');
         if (waveBtn) {
             waveBtn.innerText = wavesEnabled ? "ON" : "OFF";
@@ -318,16 +318,19 @@ Created 2026-06-23
             waveBtn.addEventListener('click', toggleWaves);
         }
 
-        // Load the main widget
-        const mainSpot = document.querySelector('.windguru-widget-container .wg-target');
-        if (mainSpot) loadWindguruWidget(mainSpot);
-
-        // Lazy load collapsed widgets
+        // Process all detail cards on load
         document.querySelectorAll('details.wg-card').forEach(detailsEl => {
+            const wrapper = detailsEl.querySelector('.wg-target');
+            
+            // 1. If the details card is ALREADY open on page load, load the widget immediately
+            if (detailsEl.open && wrapper) {
+                loadWindguruWidget(wrapper);
+            }
+
+            // 2. Set up the lazy-load listener for when the user clicks to open them later
             detailsEl.addEventListener('toggle', function() {
-                if (detailsEl.open) {
-                    const wrapper = detailsEl.querySelector('.wg-target');
-                    if (wrapper) loadWindguruWidget(wrapper);
+                if (detailsEl.open && wrapper) {
+                    loadWindguruWidget(wrapper);
                 }
             });
         });
