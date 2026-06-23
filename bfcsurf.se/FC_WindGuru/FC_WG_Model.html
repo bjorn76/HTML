@@ -73,30 +73,38 @@ Created 2026-06-22
         gap: 10px;
         border-right: 3px solid #ccc; 
         padding-left: 20px; 
-        padding-right: 30px; 
+        padding-right: 15px; 
     }
     .control-group:last-child {
-        border-right: none;
+        border-right: none; 
     }
     #wg-wave-toggle-btn {
         font-style: italic;
         font-size: 1.0rem;
-        font-weight: normal;
-        /* background-color: #91e7ac */
+        width: 55px;
+        height: 45px;
+        border-radius: 8px;
         
 
+    }
+    .wg-model-text
+    {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-right: 5px;
     }
 </style>
 
 <div class="model-controls">
     <div class="control-group">
-        <span class="pagetitle" style="font-size:20px">Forecast Model: </span>
+        <span style="font-size:3rem;"> 💨 </span> <span  style="font-size:17px" class="wg-model-text">Model: </span>
         <button class="wg-model-btn" data-model="100">WG (100)</button>
         <button class="wg-model-btn" data-model="103">YR (103)</button>
         <button class="wg-model-btn" data-model="109">DMI (109)</button>
     </div>
     <div class="control-group">
-        <button id="wg-wave-toggle-btn">Waves: ON</button>
+        <span class="wg-model-text"> Waves: </span>
+        <button id="wg-wave-toggle-btn">OFF</button>
     </div>
 </div>
 
@@ -157,7 +165,7 @@ Created 2026-06-22
     const DEFAULT_MODEL = "100"; 
     
     // Set default wave visibility (true = ON, false = OFF)
-    let wavesEnabled = true;     
+    let wavesEnabled = false;     
 
     // ==========================================================
 
@@ -245,7 +253,7 @@ Created 2026-06-22
         
         const waveBtn = document.getElementById('wg-wave-toggle-btn');
         if (waveBtn) {
-            waveBtn.innerText = wavesEnabled ? "Waves: ON" : "Waves: OFF";
+            waveBtn.innerText = wavesEnabled ? "ON" : "OFF";
             waveBtn.style.backgroundColor = wavesEnabled ? "#91e7ac" : "#f8d7da"; 
         }
 
@@ -264,7 +272,7 @@ Created 2026-06-22
         // Init Wave Toggle button
         const waveBtn = document.getElementById('wg-wave-toggle-btn');
         if (waveBtn) {
-            waveBtn.innerText = wavesEnabled ? "Waves: ON" : "Waves: OFF";
+            waveBtn.innerText = wavesEnabled ? "ON" : "OFF";
             waveBtn.style.backgroundColor = wavesEnabled ? "#d4edda" : "#f8d7da";
             waveBtn.addEventListener('click', toggleWaves);
         }
