@@ -41,20 +41,28 @@ Created 2026-06-22
 
     /* Styles for the control buttons */
     .model-controls {
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         font-family: sans-serif;
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 30px;
+        /* gap: 22px; */
+        
+        background-image: linear-gradient(to bottom, #ffffff, #ccecf1);
+        padding-bottom: 2px;
+        padding-top: 2px;
+        
+
     }
     .model-controls button {
-        padding: 5px 12px;
+        /*padding: 5px 12px; */
+        padding: 10px 10px;
         cursor: pointer;
         border: 1px solid #ccc;
         border-radius: 4px;
         background-color: #f8f9fa;
         font-weight: bold;
+        font-size: 1.2rem;
     }
     .model-controls button:hover {
         background-color: #e2e6ea;
@@ -62,22 +70,30 @@ Created 2026-06-22
     .control-group {
         display: flex;
         align-items: center;
-        gap: 30px;
-        /* border-right: 1px solid #ccc; */
-        padding-left: 15px;
-        padding-right: 15px;
+        gap: 10px;
+        border-right: 3px solid #ccc; 
+        padding-left: 20px; 
+        padding-right: 30px; 
     }
     .control-group:last-child {
         border-right: none;
+    }
+    #wg-wave-toggle-btn {
+        font-style: italic;
+        font-size: 1.0rem;
+        font-weight: normal;
+        /* background-color: #91e7ac */
+        
+
     }
 </style>
 
 <div class="model-controls">
     <div class="control-group">
-        <span>Forecast Model: </span>
+        <span class="pagetitle" style="font-size:20px">Forecast Model: </span>
         <button class="wg-model-btn" data-model="100">WG (100)</button>
-        <button class="wg-model-btn" data-model="103">YR - 103</button>
-        <button class="wg-model-btn" data-model="109">DMI - 109</button>
+        <button class="wg-model-btn" data-model="103">YR (103)</button>
+        <button class="wg-model-btn" data-model="109">DMI (109)</button>
     </div>
     <div class="control-group">
         <button id="wg-wave-toggle-btn">Waves: ON</button>
@@ -230,7 +246,7 @@ Created 2026-06-22
         const waveBtn = document.getElementById('wg-wave-toggle-btn');
         if (waveBtn) {
             waveBtn.innerText = wavesEnabled ? "Waves: ON" : "Waves: OFF";
-            waveBtn.style.backgroundColor = wavesEnabled ? "#d4edda" : "#f8d7da"; 
+            waveBtn.style.backgroundColor = wavesEnabled ? "#91e7ac" : "#f8d7da"; 
         }
 
         reloadAllVisibleWidgets();
