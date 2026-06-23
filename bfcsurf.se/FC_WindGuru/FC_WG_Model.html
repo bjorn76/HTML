@@ -18,8 +18,8 @@ Created 2026-06-22
     .wg-target{
         background: lightblue;
         /*margin-top: 0 ;*/
-        padding-top:1;
-        padding-bottom: 1;
+        padding-top:1px;
+        padding-bottom: 1px;
         /*top:0 ;*/
     }
 
@@ -63,6 +63,11 @@ Created 2026-06-22
         background-color: #f8f9fa;
         font-weight: bold;
         font-size: 1.2rem;
+    }
+    .model-controls button.active {
+        background-color: #ccecf1;
+        border-color: #88c6d1;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
     }
     .model-controls button:hover {
         background-color: #e2e6ea;
@@ -108,17 +113,17 @@ Created 2026-06-22
     </div>
 </div>
 
-<div class="windguru-widget-container" style="margin-bottom: 25px;">
-    <div class="pagetitle">📍 Bohuslän 💨</div>
+<details class="wg-card" open>
+    <summary class="wg-title">📍 Bohuslän 💨</summary>
     <div class="wg-target" data-spot="47935"></div>
-</div>
+</details>
 
 <details class="wg-card">
     <summary class="wg-title">📍 Hönö 💨</summary>
     <div class="wg-target" data-spot="47938"></div>
 </details>
 
-<details class="wg-card">
+<details class="wg-card" open>
     <summary class="wg-title">📍 Torkelstorp 💨</summary>
     <div class="wg-target" data-spot="47942"></div>
 </details>
@@ -266,6 +271,16 @@ Created 2026-06-22
     // 4. CONTROL FUNCTIONS
     function switchModel(newModel) {
         globalParams.m = newModel;
+
+        // Update active button styling
+        document.querySelectorAll('.wg-model-btn').forEach(btn => {
+            if (btn.getAttribute('data-model') === newModel) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
         reloadAllVisibleWidgets();
     }
 
@@ -285,18 +300,21 @@ Created 2026-06-22
 
     // 5. EXECUTION LOGIC
     function init() {
-        // Init Model buttons
+// Init Model buttons and set default active state
         document.querySelectorAll('.wg-model-btn').forEach(btn => {
+            if (btn.getAttribute('data-model') === DEFAULT_MODEL) {
+                btn.classList.add('active'); // Set initial active button
+            }
             btn.addEventListener('click', function() {
                 switchModel(this.getAttribute('data-model'));
             });
         });
 
-        // Init Wave Toggle button
+        // Init Wave Toggle button with standardized color
         const waveBtn = document.getElementById('wg-wave-toggle-btn');
         if (waveBtn) {
             waveBtn.innerText = wavesEnabled ? "ON" : "OFF";
-            waveBtn.style.backgroundColor = wavesEnabled ? "#d4edda" : "#f8d7da";
+            waveBtn.style.backgroundColor = wavesEnabled ? "#91e7ac" : "#f8d7da";
             waveBtn.addEventListener('click', toggleWaves);
         }
 
