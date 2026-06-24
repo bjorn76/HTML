@@ -56,13 +56,14 @@ Created 2026-06-23
     }
     .model-controls button {
         /*padding: 5px 12px; */
-        padding: 10px 10px;
+        padding: 8px 5px;
         cursor: pointer;
         border: 1px solid #ccc;
-        border-radius: 4px;
+        border-radius: 6px;
         background-color: #f8f9fa;
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 1.0rem;
+        width: 100px;
     }
     .model-controls button.active {
         background-color: #ccecf1;
@@ -94,7 +95,7 @@ Created 2026-06-23
     }
     .wg-model-text
     {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         font-weight: bold;
         margin-right: 5px;
     }
@@ -102,13 +103,13 @@ Created 2026-06-23
 
 <div class="model-controls">
     <div class="control-group">
-        <span style="font-size:3rem;"> 💨 </span> <span  style="font-size:17px" class="wg-model-text">Model: </span>
+        <span class="wg-model-text"> 💨 </span> 
         <button class="wg-model-btn" data-model="100">WG (100)</button>
         <button class="wg-model-btn" data-model="103">YR (103)</button>
         <button class="wg-model-btn" data-model="109">DMI (109)</button>
     </div>
     <div class="control-group">
-        <span class="wg-model-text"> Waves: </span>
+        <span class="wg-model-text"> 🌊 </span>
         <button id="wg-wave-toggle-btn">OFF</button>
     </div>
 </div>
